@@ -25,7 +25,7 @@ int main()
     }
     cout << endl;
 
-    cout << "Recursive -> " << fibonacciNumber(n - 1, a, b) << endl;
+    cout << "Nth Fibonacci -> " << fibonacciNumber(n - 1, a, b) << endl;
 
     return 0;
 }
