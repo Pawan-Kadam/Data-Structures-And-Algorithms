@@ -42,34 +42,34 @@ public:
 // Funtion to insert a node at the start of the LL
 void LinkedList::insertAtHead(int data)
 {
-    Node *temp = new Node(data);
+    Node *insert = new Node(data);
 
     if (head == NULL)
     {
-        head = temp;
-        tail = temp;
+        head = insert;
+        tail = insert;
     }
     else
     {
-        temp->next = head;
-        head = temp;
+        insert->next = head;
+        head = insert;
     }
 }
 
 // Funtion to insert a node at the end of the LL
 void LinkedList::insertAtTail(int data)
 {
-    Node *temp = new Node(data);
+    Node *insert = new Node(data);
 
     if (tail == NULL)
     {
-        tail = temp;
-        head = temp;
+        tail = insert;
+        head = insert;
     }
     else
     {
-        tail->next = temp;
-        tail = temp;
+        tail->next = insert;
+        tail = insert;
     }
 }
 
@@ -140,6 +140,7 @@ void LinkedList::deleteNode(int pos)
         head = temp->next;
         temp->next = NULL;
         delete temp;
+        return;
     }
     else
     {
@@ -160,6 +161,7 @@ void LinkedList::deleteNode(int pos)
         {
             prev->next = NULL;
             tail = prev;
+            return;
         }
 
         prev->next = curr->next;
@@ -208,7 +210,7 @@ int main()
     }
 
     LL.displayLL();
-    LL.deleteNode(4);
+    LL.deleteNode(7);
     LL.displayLL();
 
     return 0;
