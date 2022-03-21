@@ -16,19 +16,19 @@ public:
 class CircularLinkedList
 {
 private:
-    Node *tail;
+    Node *head;
 
 public:
     CircularLinkedList()
     {
-        tail = NULL;
+        head = NULL;
     }
 
     // As it is circular LL single node points itself making it circular
     CircularLinkedList(int val)
     {
-        tail = new Node(val);
-        tail->next = tail;
+        head = new Node(val);
+        head->next = head;
     }
 
     void insertLL(int element, int data);
@@ -43,14 +43,14 @@ void CircularLinkedList::insertLL(int element, int data)
     Node *insert = new Node(data);
 
     // As it is circular LL single node points itself making it circular
-    if (tail == NULL)
+    if (head == NULL)
     {
-        tail = insert;
-        tail->next = tail;
+        head = insert;
+        head->next = head;
     }
     else
     {
-        Node *curr = tail;
+        Node *curr = head;
 
         while (curr->data != element)
         {
@@ -65,7 +65,7 @@ void CircularLinkedList::insertLL(int element, int data)
 // Funtion to display LL
 void CircularLinkedList::displayLL()
 {
-    Node *temp = tail;
+    Node *temp = head;
 
     if (temp == NULL)
     {
@@ -75,20 +75,21 @@ void CircularLinkedList::displayLL()
     {
         cout << "Circular Linked List : ";
 
-        // do-while to maintain if LL contains single node i.e. tail
+        // do-while to maintain if LL contains single node i.e. head
         do
         {
             cout << temp->data << " ";
             temp = temp->next;
-        } while (temp != tail);
+        } while (temp != head);
         cout << endl;
+        cout << "Head-->" << head->data << endl;
     }
 }
 
 // Funtion to get length of the LL
 int CircularLinkedList::getLength()
 {
-    Node *temp = tail;
+    Node *temp = head;
     int len = 0;
 
     if (temp == NULL)
@@ -97,12 +98,12 @@ int CircularLinkedList::getLength()
     }
     else
     {
-        // do-while to maintain if LL contains single node i.e. tail
+        // do-while to maintain if LL contains single node i.e. head
         do
         {
             len++;
             temp = temp->next;
-        } while (temp != tail);
+        } while (temp != head);
     }
     return len;
 }
@@ -110,30 +111,35 @@ int CircularLinkedList::getLength()
 // Funtion to delete node with element
 void CircularLinkedList::deleteNode(int element)
 {
-    if (tail == NULL)
+    if (head == NULL)
     {
         cout << "Linked List is Empty" << endl;
     }
     else
     {
-        Node *prev = tail;
+        Node *prev = head;
         Node *curr = prev->next;
 
         while (curr->data != element)
         {
+            prev = curr;
             curr = curr->next;
         }
 
         // If LL contains single node
         if (curr == prev)
         {
-            tail = NULL;
+            head = NULL;
         }
 
-        // If curr is tail node
-        else if (tail == curr)
+        // If curr is head node
+        if (head == curr)
         {
-            tail = prev;
+            prev->next = curr->next;
+            head = prev;
+            curr->next = NULL;
+            delete curr;
+            return;
         }
 
         prev->next = curr->next;
@@ -156,6 +162,8 @@ int main()
 
     cout << LL.getLength() << endl;
 
+    LL.deleteNode(2);
+    LL.deleteNode(6);
     LL.deleteNode(5);
     LL.displayLL();
     cout << LL.getLength();
